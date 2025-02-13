@@ -31,6 +31,29 @@ This program uses Object-Oriented Programming (OOP) principles and divides the c
 8. **HTTPPacket, DNSPacket, FTPPacket Classes**: Inherit from `ApplicationLayer` and parse their respective application data.
 9. **Sniffer Class**: Responsible for managing the capture process, applying filters, and saving packets to a file.
 
+1. **Protocol Hierarchy**:  
+   - **Base Class**: `ApplicationProtocol` (abstract)  
+   - **Derived Classes**:  
+     - *Text-based*: `HTTPProtocol`, `FTPProtocol` (via `TextProtocol` intermediate)  
+     - *Binary*: `DNSProtocol`  
+
+2. **Layered Parsing** (`PacketProcessor` class):  
+   - **Ethernet** → **IP** → **Transport Layer** (TCP/UDP/ICMP) → **Application Layer**  
+   - Dynamically detects protocols based on ports (e.g., port 80 → HTTP)  
+
+3. **Core Features**:  
+   - **BPF Filtering**: Supports custom filters via `-f` flag (e.g., `tcp port 80`)  
+   - **Multi-Layer Analysis**: Extracts headers/data from Ethernet frames to HTTP requests  
+   - **Smart Pointers**: Uses `unique_ptr` for safe application protocol handling  
+
+4. **Execution Flow**:  
+   - `Sniffer` class captures packets via `libpcap`  
+   - `PacketProcessor` decodes packets using protocol-specific logic  
+   - Application-layer data formatted for human-readable output  
+
+**Usage**: `sudo ./wirefish -i eth0 -f "udp port 53"`  
+Captures traffic while cleanly separating protocol logic via inheritance/polymorphism.
+
 ### Requirements
 
 - **libpcap**: The program uses libpcap to capture packets from the network interface.
