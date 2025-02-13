@@ -136,6 +136,30 @@ To build the program, follow these steps:
 5. If the packet matches the user-defined filter (IP and port), it is saved to the capture file.
 6. The capture process continues until the user stops it, after which the program saves the capture data to the specified file.
 
+basel@basel-Lenovo-ideapad-520-15IKB:~/demo$ sudo ./wirefish -i wlp3s0 -f "udp port 53"
+
+Packet captured (89 bytes)
+IP: 192.168.1.11 -> 192.168.1.1 TTL:64
+UDP: 41737 -> 53
+DNS: ID=3565 Questions=1
+
+Packet captured (89 bytes)
+IP: 192.168.1.11 -> 192.168.1.1 TTL:64
+UDP: 32903 -> 53
+DNS: ID=62920 Questions=1
+
+Packet captured (105 bytes)
+IP: 192.168.1.1 -> 192.168.1.11 TTL:64
+UDP: 53 -> 41737
+DNS: ID=3565 Questions=1
+
+Packet captured (114 bytes)
+IP: 192.168.1.1 -> 192.168.1.11 TTL:64
+UDP: 53 -> 32903
+DNS: ID=62920 Questions=1
+
+
+
 ### Saving and Viewing Packets
 
 - After capturing packets, the program can save them to a `.pcap` file using `save_to_file()`.
